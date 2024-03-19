@@ -17,3 +17,19 @@
 .form-main{
     margin-top: 1rem;
 }
+.toggle-btn-signup{
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 8%;
+  
+ 
+}
+.toggle-btn-signin{
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 5%;
+}

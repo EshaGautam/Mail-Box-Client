@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./SignUp.css";
 import { useRef } from "react";
 import { Card, Form } from "react-bootstrap";
+import authContext from "../Store/Context";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const SignUp = () => {
+ const authCtx = useContext(authContext)
+ const{login} = authCtx
+  const[signup,setSignup] = useState(false)
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  const history = useHistory()
 
-  const handleSignUp = async (event) => {
+  const toggleHandler =()=>{
+    setSignup(prev=>!prev)
+  }
+
+  const submitHandler= async (event) => {
     try {
       event.preventDefault();
-      if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-        throw new Error("Passwords Are not matching");
+      let url
+      if(signup){
+       if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+       throw new Error("Passwords Are not matching");
+ }
+      url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY"
       }
-      const userdata = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY",
+      else{
+        url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY"
+      }
+     
+      const userdata = await fetch(url ,
         {
           method: "POST",
           body: JSON.stringify({
@@ -30,9 +47,13 @@ const SignUp = () => {
       );
       const response = await userdata.json();
       if (userdata.ok) {
+        login(response.idToken)
+        history.replace('/home')
+
         console.log("User Logged In Successfully");
+
       } else {
-        throw new Error("Problem in signUp");
+        throw new Error(response.error.message);
       }
     } catch (error) {
       alert(error);
@@ -42,8 +63,8 @@ const SignUp = () => {
     <div className="form-style">
       <Card style={{ width: "20rem" }}>
         <Card.Body>
-          <h2 className="auth-head">Sign Up</h2>
-          <Form className="form-main" onSubmit={handleSignUp}>
+          <h2 className="auth-head">{signup ? "Sign Up" : "Login"}</h2>
+          <Form className="form-main" onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formGroupEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -60,20 +81,28 @@ const SignUp = () => {
                 ref={passwordRef}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupConfirmPassword">
-              <Form.Label>Confirm-Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm-Password"
-                ref={confirmPasswordRef}
-              />
-            </Form.Group>
+            {signup && (
+              <Form.Group className="mb-3" controlId="formGroupConfirmPassword">
+                <Form.Label>Confirm-Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm-Password"
+                  ref={confirmPasswordRef}
+                />
+              </Form.Group>
+            )}
             <button type="submit" className="auth-btn">
-              SignUp
+              {signup ? "SignUp" : "Login"}
             </button>
           </Form>
         </Card.Body>
       </Card>
+      <button
+        className={signup ? "toggle-btn-signup" : "toggle-btn-signin"}
+        onClick={toggleHandler}
+      >
+        {signup ? "Have an account?Login!" : "Don't have an account?Sign Up!"}
+      </button>
     </div>
   );
 };
