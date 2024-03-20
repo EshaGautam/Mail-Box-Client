@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const SignUp = () => {
  const authCtx = useContext(authContext)
- const{login} = authCtx
+ const{login,handleEmail} = authCtx
   const[signup,setSignup] = useState(false)
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -48,6 +48,7 @@ const SignUp = () => {
       const response = await userdata.json();
       if (userdata.ok) {
         login(response.idToken)
+        handleEmail(response.email)
         history.replace('/home')
 
         console.log("User Logged In Successfully");
