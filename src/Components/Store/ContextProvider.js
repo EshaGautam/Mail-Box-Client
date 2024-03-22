@@ -4,8 +4,9 @@ import React, { useState } from 'react'
 
 const ContextProvider = (props) => {
  const [contentState, setContentState] = useState("");
-    const[token,setToken] = useState(null)
-    const[userEmail,setUserEmail] = useState('')
+const[token,setToken] = useState(null)
+ const[userEmail,setUserEmail] = useState('')
+ const [visibleMail, setVisibleMail] = useState(false);
   
      
     const userLoggedIn = !!token
@@ -28,6 +29,10 @@ let clearedEmail = email.replace(/[.@]/g, "");
       setContentState(content)
     }
 
+    const handleComposeMailState=()=>{
+      setVisibleMail(prev=>!prev)
+    }
+
     const auth ={
         token,
         userLoggedIn,
@@ -35,7 +40,9 @@ let clearedEmail = email.replace(/[.@]/g, "");
         userEmail,
         contentState,
         handleContent,
-        handleEmail
+        handleEmail,
+        handleComposeMailState,
+        visibleMail
         
     }
 

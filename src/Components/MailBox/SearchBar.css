@@ -1,0 +1,27 @@
+
+.search-bar {
+ 
+ 
+}
+.search-bar:focus{
+    background-color: white;
+    color: black;
+}
+.search-nav{
+  display: flex;
+  gap:1rem
+}
+.search-nav .name{
+  margin-left: 5rem;
+}
+.input{
+  margin-right: 2rem;
+}
+.input .search-bar{
+ background-color: white;
+  color: black;
+  z-index: 10;
+  border: 2px solid white;
+  min-width: 50%
+
+}

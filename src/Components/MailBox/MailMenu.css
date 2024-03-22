@@ -1,0 +1,39 @@
+/* 
+.mail-menu {
+
+} */
+
+.mail-navbar {
+  color:blue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: rgb(32, 30, 30);
+  z-index: -1;
+  padding-top:7%;
+  padding-left:2%;
+ 
+}
+.mail-nav{
+ display: flex;
+  flex-direction: column;
+  gap:1rem;
+  
+
+}
+.mail-nav .mail-link{
+   color:white;
+   text-decoration: none;
+
+    margin-left:3rem;
+}
+.compose-btn{
+   margin-left:2rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border:2px solid white;
+    margin-bottom: 2rem;
+  
+}
