@@ -77,9 +77,6 @@ export const ReadMessage = (userEmail, endpoint, mail) => {
               if (!response.ok) {
                 throw new Error(response.statusText);
               }
-      
-              const data = await response.json();
-              alert('Read status changed');
             } catch (error) {
               alert('Error: ' + error.message);
             }
@@ -129,7 +126,6 @@ export const fetchMail = (userEmail,endpoint) => {
            if(!response.ok){
             alert('Problem in deleting Mail')
            }
-           alert('Successfully Deleted Mail')
         }
         catch(error){
             alert(error)
