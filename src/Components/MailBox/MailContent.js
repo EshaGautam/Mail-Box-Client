@@ -3,9 +3,10 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import './MailContent.css'
 import { useParams } from "react-router-dom";
 import { Card,ListGroup,} from "react-bootstrap";
-import { fetchMail, mailAction } from "../Store/MailDataSlice";
+import { deleteMail, fetchMail, mailAction } from "../Store/MailDataSlice";
 import { useSelector,useDispatch } from "react-redux";
 import { ReadMessage } from "../Store/MailDataSlice";
+import { MdDelete } from "react-icons/md";
 
 
 
@@ -41,7 +42,13 @@ const handleCheckBox=(event)=>{
 event.stopPropagation()
 }
 
+const handleDeleteMail=(event,userId)=>{
+  event.preventDefault()
+ const filteredMail = fetchedData.filter((mail)=>mail.id !== userId)
+ dispatch(mailAction.setFetchedData(filteredMail))
+ dispatch(deleteMail(userEmail,endpoint,userId))
 
+}
 const handleReadMessage = (userId) => {
   if (endpoint === 'sent') {
     return;
@@ -69,6 +76,7 @@ const handleReadMessage = (userId) => {
               <span>{mail.subject}</span>
               <span>{convertHtmlToPlainText(mail.content.length > 100 ? mail.content.substring(0, 100) + "..." : mail.content)}</span>
             <span>{mail.timestamp}</span>
+            <div onClick={(event)=>handleDeleteMail(event,mail.id)} className="delete-icon"><MdDelete /></div>
           </ListGroup.Item>
         </ListGroup>
         </Link>

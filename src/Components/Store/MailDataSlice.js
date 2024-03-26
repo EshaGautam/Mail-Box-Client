@@ -119,6 +119,23 @@ export const fetchMail = (userEmail,endpoint) => {
       }
     };
   };
+
+  export const deleteMail = (userEmail,endpoint,userId)=>{
+    return async(dispatch)=>{
+        try{
+           const response= await fetch(`https://mail-box-client-a0c72-default-rtdb.firebaseio.com/mail/${userEmail}/${endpoint}/${userId}.json`,{
+            method:'DELETE'
+           })
+           if(!response.ok){
+            alert('Problem in deleting Mail')
+           }
+           alert('Successfully Deleted Mail')
+        }
+        catch(error){
+            alert(error)
+        }
+    }
+  }
   
 export const mailAction = MailDataSlice.actions
 export default MailDataSlice.reducer
