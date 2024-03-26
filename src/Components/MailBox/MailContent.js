@@ -1,61 +1,80 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import './MailContent.css'
 import { useParams } from "react-router-dom";
-import authContext from "../Store/Context";
-import { useContext } from "react";
-import { Card,ListGroup,Form} from "react-bootstrap";
+import { Card,ListGroup,} from "react-bootstrap";
+import { fetchMail, mailAction } from "../Store/MailDataSlice";
+import { useSelector,useDispatch } from "react-redux";
+import { ReadMessage } from "../Store/MailDataSlice";
+
+
 
 const MailContent = () => {
-  const { endpoint } = useParams();
-  const authCtx = useContext(authContext);
-  const { userEmail } = authCtx;
-  const [fetchedData, setFetchedData] = useState([]); 
+  const {  endpoint } = useParams(); 
+  const fetchedData = useSelector(state=>state.mail.fetchedData)
+  const userEmail = useSelector(state=>state.auth.userEmail)
+  const readState = useSelector(state=>state.mail.readState)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchSentMail = async () => {
-      try {
-        const response = await fetch(
-          `https://mail-box-client-a0c72-default-rtdb.firebaseio.com/${userEmail}/${endpoint}.json`
-        )
-        if (!response.ok) {
-          throw new Error("Failed to fetch mail content");
-        }
-        else{
-         const data = await response.json();
-        const mailKeys = Object.keys(data)
-        const transformedData = mailKeys.map((mailKey) => ({
-          id: mailKey,
-          ...data[mailKey]
-        }));
-          setFetchedData(transformedData)
-        }
-      }
-    catch (error) {
-        console.error("Error fetching mail content:", error.message);
-      }
+    dispatch(fetchMail(userEmail,endpoint));
+    console.log(endpoint)
+  
+  }, [userEmail,endpoint]);
+  
+  useEffect(() => {
+    const storedReadState = JSON.parse(localStorage.getItem('mailData'));
+    if (storedReadState && storedReadState.read) {
+      dispatch(mailAction.setReadState());
+    } else {
+      localStorage.setItem('read',false)
     }
-    fetchSentMail()
-},[])
+  }, [dispatch]);
+  
+  const convertHtmlToPlainText = (html) => {
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+    return tempElement.textContent || tempElement.innerText || '';
+  }
 
-  console.log(fetchedData)
+const handleCheckBox=(event)=>{
+event.stopPropagation()
+}
+
+
+const handleReadMessage = (userId) => {
+  if (endpoint === 'sent') {
+    return;
+  }
+  const updateMail = fetchedData.find(data => data.id === userId);
+  if (updateMail && !readState) {
+    dispatch(mailAction.setReadState())
+    dispatch(ReadMessage(userEmail, endpoint, updateMail));
+  }
+
+};
+
 
   return (
-    <Card className="ctn-1">
+    fetchedData.length>0&&(<Card className="ctn-1">
       {fetchedData.map((mail) => (
-        <ListGroup>
-          <ListGroup.Item key={mail.id} className="mail-list">
-           
+       <div key={mail.id}>
+       <Link to={`/mail/${endpoint}/${mail.id}`} className='link-wrapper'onClick={()=>{handleReadMessage(mail.id)}}><ListGroup>
+          <ListGroup.Item key={mail.id} className="mail-list">   
               <span>
-                <input type="checkbox" id="check" />
+               {!mail.read&&endpoint==='inbox'&&<div className="read-message"></div>}    
+                <input type="checkbox" id="check" onClick={handleCheckBox} />
               </span>
-              <span>TO:{mail.email}</span>
+              <span>{endpoint === 'inbox' ? `From: ${mail.sender}` : `To: ${mail.receiver}`}</span>
               <span>{mail.subject}</span>
-              <span>{mail.content}</span>
+              <span>{convertHtmlToPlainText(mail.content.length > 100 ? mail.content.substring(0, 100) + "..." : mail.content)}</span>
             <span>{mail.timestamp}</span>
           </ListGroup.Item>
         </ListGroup>
+        </Link>
+        </div>
       ))}
-    </Card>
+    </Card>)
   );
 };
 

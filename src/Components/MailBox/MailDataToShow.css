@@ -1,0 +1,18 @@
+.mail-data-ctn{
+  border: 2px solid gainsboro;
+  margin-left: 14%;
+  margin-right: 2%;
+  margin-top: 1%;
+  padding: 1rem;
+
+}
+.mail-header{
+  display: flex;
+  flex-direction: column;
+  border:  1 px solid gainsboro;
+}
+
+.mail-header-ctn{
+  display: flex;
+  justify-content: space-between;
+}

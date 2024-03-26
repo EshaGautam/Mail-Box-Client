@@ -3,14 +3,46 @@ margin-left: 15%;
 margin-top: 1rem;
 margin-right: 0.5rem;
 position: fixed;
+
 }
 .ctn-1 .mail-list{
     display: flex;
     justify-content: space-between;
     gap: 2%;
+    
 }
 .search-btn{
     background-color: white;
     color: black;
     border: 2px solid black;
 }
+
+.link-wrapper{
+    text-decoration: none;
+}
+
+.read-message {
+    width: 10px;
+    height: 10px;
+    margin-top: 0.25rem;
+    background-color:lightblue; 
+    border-radius: 50%; 
+    animation: pulse 1s ease-out infinite; 
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8); 
+      filter: blur(0); 
+    }
+    50% {
+      transform: scale(1.2); 
+      filter: blur(0); 
+    }
+    100% {
+      transform: scale(0.8); 
+      filter: blur(2px); 
+    }
+  }
+  
+  

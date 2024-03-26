@@ -1,51 +1,34 @@
 import React, { useRef, useState } from "react";
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import "./ComposeMail.css";
 import { Form, InputGroup, Card } from "react-bootstrap";
-import { useContext } from "react";
-import authContext from "../Store/Context";
-import { Editor} from "react-draft-wysiwyg";
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ReactDOM from "react-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { SendEmail } from "../Store/MailDataSlice";
 
 
-const ComposeMail = (props) => {
+const ComposeMail = () => {
   const modalRoot = document.getElementById("modal-root");
-  const authCtx = useContext(authContext);
-  const { userEmail } = authCtx;
-  const [editorState, setEditorState] = useState(null);
+  const dispatch = useDispatch()
+  const userEmail = useSelector(state=>state.auth.userEmail)
   const receiverEmail = useRef();
   const subject = useRef();
+  const content = useRef()
 
-  const sendMail = async () => {
-    const mailTosend = receiverEmail.current.value.replace(/[.@]/g, "");
-    const content = editorState.getCurrentContent().getPlainText();
+  const sendMailData =  () => {
     const timeStamp =new Date() 
-
     const userData = {
-      email: receiverEmail.current.value,
+      sender:userEmail,
+      receiver: receiverEmail.current.value,
       subject: subject.current.value,
-      content: content,
+      content: content.current.value,
       timestamp: timeStamp,
-    };
-    try {
-      const data = await fetch(
-        `https://mail-box-client-a0c72-default-rtdb.firebaseio.com/${userEmail}/sent.json`,
-        {
-          method: "POST",
-          body: JSON.stringify(userData),
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
-      if (data.ok) {
-        alert("Mail Sent SuccessFully");
-      } else {
-        throw new Error("problem in sending mail");
-      }
-    } catch (error) {
-      alert(error);
     }
+  dispatch(SendEmail(userData)) 
   };
 
   return ReactDOM.createPortal(
@@ -64,15 +47,9 @@ const ComposeMail = (props) => {
           <Form.Control type="text" placeholder="subject" ref={subject} />
         </Form.Group>
         <div className="editor">
-          <Editor
-            wrapperClassName="demo-wrapper"
-            editorClassName="demo-editor"
-            editorState={editorState}
-            onEditorStateChange={setEditorState}
-          />
+        <ReactQuill theme="snow"  ref={content} />
         </div>
-
-        <button className="send-btn" type="submit" onClick={sendMail}>
+        <button className="send-btn" type="submit" onClick={sendMailData}>
           Send
         </button>
       </Card.Body>

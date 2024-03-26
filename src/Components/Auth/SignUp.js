@@ -1,18 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import "./SignUp.css";
 import { useRef } from "react";
 import { Card, Form } from "react-bootstrap";
-import authContext from "../Store/Context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { authAction } from "../Store/AuthSlice";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
- const authCtx = useContext(authContext)
- const{login,handleEmail} = authCtx
   const[signup,setSignup] = useState(false)
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const toggleHandler =()=>{
     setSignup(prev=>!prev)
@@ -47,8 +47,8 @@ const SignUp = () => {
       );
       const response = await userdata.json();
       if (userdata.ok) {
-        login(response.idToken)
-        handleEmail(response.email)
+        dispatch(authAction.login(response.idToken))
+        dispatch(authAction.setUserEmail(response.email))
         history.replace('/home')
 
         console.log("User Logged In Successfully");

@@ -4,16 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
-import ContextProvider from './Components/Store/ContextProvider';
+
+import Store from './Components/Store/Store';
+import { Provider } from 'react-redux';
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ContextProvider>
+  
+      <Provider store={Store}>
       <App />
-    </ContextProvider>
+      </Provider>
   </React.StrictMode>
 );
 

@@ -4,16 +4,17 @@ import {
 } from "react-bootstrap";
 import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './MailMenu.css'
-import MailContent from './MailContent';
-import authContext from "../Store/Context";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { mailAction } from "../Store/MailDataSlice";
+import MailContent from "./MailContent";
+
 const MailMenu = () => {
- const { endpoint } = useParams();
- const authCtx = useContext(authContext);
- const { handleComposeMailState } = authCtx;
+const userEmail = useSelector(state=>state.auth.userEmail)
+const {endpoint} = useParams()
+ const dispatch = useDispatch()
  
  const handleComposeMail=()=>{
-handleComposeMailState()
+dispatch(mailAction.setVisibleMail())
  }
 
   return (
@@ -36,10 +37,8 @@ handleComposeMailState()
             Home
           </Link>
         </Nav>
+
       </div>
-     
-      {endpoint === "inbox" && <MailContent />}
-      {endpoint === "sent" && <MailContent />}
     </>
   );
 }
