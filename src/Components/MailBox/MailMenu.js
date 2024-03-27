@@ -1,21 +1,19 @@
-
-import {
-  Nav
-} from "react-bootstrap";
-import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import './MailMenu.css'
+import { Nav } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import "./MailMenu.css";
 import { useDispatch, useSelector } from "react-redux";
 import { mailAction } from "../Store/MailDataSlice";
 import MailContent from "./MailContent";
 
 const MailMenu = () => {
-const userEmail = useSelector(state=>state.auth.userEmail)
-const {endpoint} = useParams()
- const dispatch = useDispatch()
- 
- const handleComposeMail=()=>{
-dispatch(mailAction.setVisibleMail())
- }
+  const userEmail = useSelector((state) => state.auth.userEmail);
+  const unreadCount = useSelector((state) => state.mail.unreadCount);
+  const { endpoint } = useParams();
+  const dispatch = useDispatch();
+
+  const handleComposeMail = () => {
+    dispatch(mailAction.setVisibleMail());
+  };
 
   return (
     <>
@@ -25,7 +23,7 @@ dispatch(mailAction.setVisibleMail())
         </button>
         <Nav className="mail-nav">
           <Link to={`/mail/inbox`} className="mail-link">
-            INBOX
+            INBOX {unreadCount > 0 && <span>{unreadCount}</span>}
           </Link>
           <Link to={`/mail/sent`} className="mail-link">
             SENT
@@ -37,10 +35,9 @@ dispatch(mailAction.setVisibleMail())
             Home
           </Link>
         </Nav>
-
       </div>
     </>
   );
-}
+};
 
-export default MailMenu
+export default MailMenu;

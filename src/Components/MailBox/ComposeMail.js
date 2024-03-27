@@ -8,7 +8,8 @@ import { Form, InputGroup, Card } from "react-bootstrap";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { SendEmail } from "../Store/MailDataSlice";
+import { SendEmail, mailInInbox } from "../Store/MailDataSlice";
+import { fetchMail } from "../Store/MailDataSlice";
 
 
 const ComposeMail = () => {
@@ -28,7 +29,7 @@ const ComposeMail = () => {
       content: content.current.value,
       timestamp: timeStamp.toISOString(),
     }
-  dispatch(SendEmail(userData)) 
+  dispatch(SendEmail(userData))
   };
 
   return ReactDOM.createPortal(

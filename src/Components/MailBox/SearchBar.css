@@ -1,8 +1,4 @@
 
-.search-bar {
- 
- 
-}
 .search-bar:focus{
     background-color: white;
     color: black;
@@ -13,6 +9,7 @@
 }
 .search-nav .name{
   margin-left: 5rem;
+  color: white;
 }
 .input{
   margin-right: 2rem;
@@ -24,4 +21,10 @@
   border: 2px solid white;
   min-width: 50%
 
+}
+
+
+.name{
+ 
+  z-index:100
 }
