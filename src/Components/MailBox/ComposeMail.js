@@ -57,6 +57,7 @@ const ComposeMail = () => {
           Send
         </button>
       </Card.Body>
+      
     </Card>,
     modalRoot
   );

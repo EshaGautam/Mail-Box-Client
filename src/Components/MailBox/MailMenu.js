@@ -22,10 +22,7 @@ const MailMenu = () => {
     history.replace('/signup')
   }
 
-    const isEndpointPresent = !!endpoint;
-    if (!isEndpointPresent) {
-      history.replace('/mail/inbox');
-    }
+  
 
   return (
     <>
@@ -37,7 +34,7 @@ const MailMenu = () => {
         <Link to="/home" className="mail-link">
               HOME
             </Link>
-          <Link to={`/mail/inbox`} className="mail-link">
+          <Link to={`/mail/inbox`}  className="mail-link">
             INBOX {unreadCount > 0 && <span style={{backgroundColor:'grey',height:'2%',width:'4%',padding:'0.25rem',marginLeft:'5px',borderRadius:'7px'}}>{unreadCount}</span>}
           </Link>
           <Link to={`/mail/sent`} className="mail-link">
@@ -48,7 +45,7 @@ const MailMenu = () => {
             </Link>
         </Nav>
       </div>
-      {isEndpointPresent && <MailContent />}
+      
     </>
   );
 };

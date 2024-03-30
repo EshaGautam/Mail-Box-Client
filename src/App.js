@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import SignUp from "./Components/Auth/SignUp";
-import { Redirect,  } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useHistory,  } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
 import Home from "./Components/Home/Home";
 import MailBox from './Components/MailBox/MailBox'
@@ -15,8 +15,9 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMail } from "./Components/Store/MailDataSlice";
 function App() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const userLoggedIn = useSelector(state=>state.auth.userLoggedIn)
-  
+
  
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
           </Route>
           <Route path="/mail/:endpoint" exact>
            {userLoggedIn&&<MailBox />}
+           {userLoggedIn && <MailContent />}
           </Route>
           <Route path="/mail">
            {userLoggedIn&& <MailBox />}
