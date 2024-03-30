@@ -23,15 +23,14 @@ function App() {
       <Router>
         <Switch>
         <Route path="/mail/:endpoint/:mailId" exact>
-            <MailBox/>
-            <MailDataToShow/>
+            {userLoggedIn&&<MailBox/>}
+            {userLoggedIn&&<MailDataToShow/>}
           </Route>
           <Route path="/mail/:endpoint" exact>
-           <MailBox />
-           <MailContent/>
+           {userLoggedIn&&<MailBox />}
           </Route>
           <Route path="/mail">
-            <MailBox />
+           {userLoggedIn&& <MailBox />}
           </Route>
           <Route path="/home">
             <Navigation />

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import "./SignUp.css";
 import { useRef } from "react";
 import { Card, Form } from "react-bootstrap";
@@ -13,6 +13,7 @@ const SignUp = () => {
   const confirmPasswordRef = useRef();
   const history = useHistory()
   const dispatch = useDispatch()
+
 
   const toggleHandler =()=>{
     setSignup(prev=>!prev)

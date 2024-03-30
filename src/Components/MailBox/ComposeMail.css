@@ -1,5 +1,5 @@
 .mail-ctn{
-    position:relative;
+    position:fixed;
     width:40vw;
     border:2px solid black;
     margin-top:5%;
@@ -7,8 +7,6 @@
     padding:1rem;
     padding-bottom:3rem;
     z-index: 10;
-    
-    
 }
 
 .send-btn {
@@ -29,7 +27,7 @@
 }
 
 .demo-editor {
-  min-height: 100px; 
+  min-height: 500px; 
   font-family: Arial, sans-serif; 
   font-size: 16px; 
   overflow-y:scroll;

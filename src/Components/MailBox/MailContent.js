@@ -7,6 +7,7 @@ import { deleteMail, fetchMail, mailAction } from "../Store/MailDataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { ReadMessage } from "../Store/MailDataSlice";
 import { MdDelete } from "react-icons/md";
+import useFetchMail from "../Custom-hooks/useFetchMail";
 
 const MailContent = () => {
   const { endpoint } = useParams();
@@ -16,14 +17,17 @@ const MailContent = () => {
   const readState = useSelector((state) => state.mail.readState);
   const unreadCount = useSelector((state) => state.mail.unreadCount);
   const dispatch = useDispatch();
+ 
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch(fetchMail(userEmail, endpoint, unreadCount, fetchedData));
-    }, 500);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     dispatch(fetchMail(userEmail, endpoint, unreadCount, fetchedData));
+  //   }, 500);
 
-    return () => clearInterval(intervalId);
-  }, [dispatch, userEmail, endpoint, unreadCount, fetchedData]);
+  //   return () => clearInterval(intervalId);
+  // }, [dispatch, userEmail, endpoint, unreadCount, fetchedData]);
+
+  useFetchMail(userEmail, endpoint, fetchedData);
 
   useEffect(() => {
     const storedReadState = JSON.parse(localStorage.getItem("mailData"));
@@ -65,7 +69,8 @@ const MailContent = () => {
 
   return (
     fetchedData.length > 0 && (
-      <Card className="ctn-1">
+      <div className="ctn-1">
+
         {fetchedData.map((mail) => (
           <div key={mail.id}>
             <Link
@@ -112,7 +117,7 @@ const MailContent = () => {
             </Link>
           </div>
         ))}
-      </Card>
+      </div>
     )
   );
 };

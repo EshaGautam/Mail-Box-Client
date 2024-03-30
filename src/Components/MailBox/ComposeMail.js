@@ -8,8 +8,9 @@ import { Form, InputGroup, Card } from "react-bootstrap";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { SendEmail, mailInInbox } from "../Store/MailDataSlice";
+import { SendEmail, mailAction, mailInInbox } from "../Store/MailDataSlice";
 import { fetchMail } from "../Store/MailDataSlice";
+import useSendEmail from "../Custom-hooks/useSendMail";
 
 
 const ComposeMail = () => {
@@ -19,6 +20,7 @@ const ComposeMail = () => {
   const receiverEmail = useRef();
   const subject = useRef();
   const content = useRef()
+  const sendEmail = useSendEmail()
 
   const sendMailData =  () => {
     const timeStamp =new Date() 
@@ -29,7 +31,8 @@ const ComposeMail = () => {
       content: content.current.value,
       timestamp: timeStamp.toISOString(),
     }
-  dispatch(SendEmail(userData))
+  sendEmail(userData)
+  dispatch(mailAction.setVisibleMail())
   };
 
   return ReactDOM.createPortal(

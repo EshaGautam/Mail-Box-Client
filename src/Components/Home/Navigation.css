@@ -1,0 +1,13 @@
+.logout-btn{
+    background-color: none;
+    border-radius: 1rem;
+    border:none
+
+}
+.head-name{
+    font-size: larger;
+}
+h1{
+    color: white;
+    z-index: 1000;
+}

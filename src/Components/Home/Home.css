@@ -1,3 +1,19 @@
-h1{
-    color:black
+
+.home-text{
+    width: 50%;
+    height: 40vh;
+    padding: 5rem;
+    padding-left:7rem;
+    font-size: 2rem;
+    margin-top: 10%;
+    margin-left:30%; 
+    color: whitesmoke;
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.4);
+     position:relative;
+   color:white;
+   z-index:1;
+     backdrop-filter: blur(10px);
+   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }

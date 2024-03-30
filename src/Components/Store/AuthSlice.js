@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
+
 
 const existingUserEmail = localStorage.getItem('userEmail')
 const existingToken = localStorage.getItem('token')
@@ -7,7 +7,7 @@ const existingToken = localStorage.getItem('token')
 const authState = {
     token:existingToken,
     userEmail:existingUserEmail,
-    userLoggedIn:false
+    userLoggedIn:!!existingToken
 }
 
 
@@ -27,6 +27,9 @@ const AuthSlice = createSlice({
             const clearedEmail = action.payload.replace(/[.@]/g, "")
             state.userEmail=clearedEmail
             localStorage.setItem('userEmail',clearedEmail)
+        },
+        logout(){
+            localStorage.clear()
         }
     }
 })

@@ -3,9 +3,11 @@ import './Home.css'
 
 const Home = () => {
   return (
-    <div>
-      <h1>Welcome to your mail box</h1>
+    <div className='home-text'>
+       <h1>WELCOME TO YOUR MAILBOX</h1>
     </div>
+ 
+
   );
 }
 

@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const MailBox = () => {
   const visibleMail  = useSelector(state=>state.mail.visibleMail)
-  const{endpoint} = useParams()
   return (
     <div>
       <SearchBar />
