@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { mailAction } from "../Store/MailDataSlice";
 
-const useFetchMail = (userEmail, endpoint, fetchedData) => {
+const useFetchMail = (userEmail, endpoint) => {
   const dispatch = useDispatch();
+  const fetchedData = useSelector((state) => state.mail.fetchedData);
 
   useEffect(() => {
     const fetchMailData = async () => {
@@ -44,11 +45,10 @@ const useFetchMail = (userEmail, endpoint, fetchedData) => {
       }
     };
 
-
     const intervalId = setInterval(fetchMailData, 200);
 
     return () => clearInterval(intervalId);
-  }, [userEmail, endpoint, fetchedData, dispatch]);
+  }, [userEmail, endpoint, dispatch]);
 };
 
 export default useFetchMail;

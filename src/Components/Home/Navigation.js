@@ -3,7 +3,7 @@ import './Navigation.css'
 import { Navbar,Container,Nav } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { authAction } from '../Store/AuthSlice';
+import { authAction } from '../../Store/AuthSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Navigation = () => {

@@ -3,31 +3,28 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./MailContent.css";
 import { useParams } from "react-router-dom";
 import { Card, ListGroup } from "react-bootstrap";
-import { deleteMail, fetchMail, mailAction } from "../Store/MailDataSlice";
+import { deleteMail, fetchMail, mailAction } from "../../Store/MailDataSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { ReadMessage } from "../Store/MailDataSlice";
+import { ReadMessage } from "../../Store/MailDataSlice";
 import { MdDelete } from "react-icons/md";
-import useFetchMail from "../Custom-hooks/useFetchMail";
+// import useFetchMail from "../../Custom-hook/useFetchMail";
 
 const MailContent = () => {
   const { endpoint } = useParams();
-  const [timer, setTimer] = useState(null);
   const fetchedData = useSelector((state) => state.mail.fetchedData);
   const userEmail = useSelector((state) => state.auth.userEmail);
   const readState = useSelector((state) => state.mail.readState);
   const unreadCount = useSelector((state) => state.mail.unreadCount);
   const dispatch = useDispatch();
- 
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     dispatch(fetchMail(userEmail, endpoint, unreadCount, fetchedData));
-  //   }, 500);
-
-  //   return () => clearInterval(intervalId);
-  // }, [dispatch, userEmail, endpoint, unreadCount, fetchedData]);
-
-  useFetchMail(userEmail, endpoint, fetchedData);
+  useEffect(() => {
+    const fetchData = () => {
+      dispatch(fetchMail(userEmail, endpoint, fetchedData));
+    };
+    fetchData();
+    const intervalId = setInterval(fetchData, 2000);
+    return () => clearInterval(intervalId);
+  }, [dispatch, userEmail, endpoint]);
 
   useEffect(() => {
     const storedReadState = JSON.parse(localStorage.getItem("mailData"));
@@ -59,8 +56,9 @@ const MailContent = () => {
     if (endpoint === "sent") {
       return;
     }
+
     const updateMail = fetchedData.find((data) => data.id === userId);
-    if (updateMail && !readState) {
+    if (updateMail && !updateMail.read) {
       dispatch(mailAction.setReadState());
       dispatch(ReadMessage(userEmail, endpoint, updateMail));
       dispatch(mailAction.decreaseUnreadCount());
@@ -70,7 +68,6 @@ const MailContent = () => {
   return (
     fetchedData.length > 0 && (
       <div className="ctn-1">
-
         {fetchedData.map((mail) => (
           <div key={mail.id}>
             <Link

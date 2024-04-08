@@ -1,59 +1,56 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUp.css";
 import { useRef } from "react";
 import { Card, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { authAction } from "../Store/AuthSlice";
+import { authAction } from "../../Store/AuthSlice";
 import { useDispatch } from "react-redux";
 
 const SignUp = () => {
-  const[signup,setSignup] = useState(false)
+  const [signup, setSignup] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
 
+  const toggleHandler = () => {
+    setSignup((prev) => !prev);
+  };
 
-  const toggleHandler =()=>{
-    setSignup(prev=>!prev)
-  }
-
-  const submitHandler= async (event) => {
+  const submitHandler = async (event) => {
     try {
       event.preventDefault();
-      let url
-      if(signup){
-       if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-       throw new Error("Passwords Are not matching");
- }
-      url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY"
-      }
-      else{
-        url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY"
-      }
-     
-      const userdata = await fetch(url ,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "content-type": "application/json",
-          },
+      let url;
+      if (signup) {
+        if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+          throw new Error("Passwords Are not matching");
         }
-      );
+        url =
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY";
+      } else {
+        url =
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAT1sUFfNQfAwVIvxpAWIAXmcNdNb0DLpY";
+      }
+
+      const userdata = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
       const response = await userdata.json();
       if (userdata.ok) {
-        dispatch(authAction.login(response.idToken))
-        dispatch(authAction.setUserEmail(response.email))
-        history.replace('/home')
+        dispatch(authAction.login(response.idToken));
+        dispatch(authAction.setUserEmail(response.email));
+        history.replace("/home");
 
         console.log("User Logged In Successfully");
-
       } else {
         throw new Error(response.error.message);
       }

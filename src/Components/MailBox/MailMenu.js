@@ -2,9 +2,8 @@ import { Nav } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "./MailMenu.css";
 import { useDispatch, useSelector } from "react-redux";
-import { mailAction } from "../Store/MailDataSlice";
-import MailContent from "./MailContent";
-import { authAction } from "../Store/AuthSlice";
+import { mailAction } from "../../Store/MailDataSlice";
+import { authAction } from "../../Store/AuthSlice";
 
 const MailMenu = () => {
   const history = useHistory()
