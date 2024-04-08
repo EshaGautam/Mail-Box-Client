@@ -24,7 +24,7 @@ const Navigation = () => {
             <Link to="/home" className="nav-link">
               HOME
             </Link>
-            <Link to="/mail" className="nav-link">
+            <Link to="/mail/inbox" className="nav-link">
               MAIL
             </Link>
             <Link to="/signup" className="nav-link" onClick={logoutHandler}>

@@ -26,9 +26,9 @@ function App() {
           </Route>
           <Route path="/mail/:endpoint" exact>
             {userLoggedIn && <MailBox />}
-            {userLoggedIn && <MailContent />}
+            {userLoggedIn && <MailContent/>}
           </Route>
-          <Route path="/mail">{userLoggedIn && <MailBox />}</Route>
+          <Route path="/mail/inbox">{userLoggedIn && <MailBox /> }</Route>
           <Route path="/home">
             <Navigation />
             {userLoggedIn ? <Home /> : <Redirect to="/" />}
