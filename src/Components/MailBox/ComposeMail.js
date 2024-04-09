@@ -27,7 +27,7 @@ const ComposeMail = () => {
       receiver: receiverEmail.current.value,
       subject: subject.current.value,
       content: content.current.value,
-      timestamp: timeStamp.toISOString(),
+      timestamp: timeStamp,
     };
     sendEmail(userData);
     dispatch(mailAction.setVisibleMail());

@@ -27,6 +27,7 @@ const AuthSlice = createSlice({
             const clearedEmail = action.payload.replace(/[.@]/g, "")
             state.userEmail=clearedEmail
             localStorage.setItem('userEmail',clearedEmail)
+            
         },
         logout(){
             localStorage.clear()

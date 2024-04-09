@@ -91,7 +91,7 @@ const MailContent = () => {
                   </span>
                   <span>
                     {endpoint === "inbox"
-                      ? `From: ${mail.sender}`
+                      ? `From: ${mail.sender.replace(/(gmail)(com)/, "@$1.$2")}`
                       : `To: ${mail.receiver}`}
                   </span>
                   <span>{mail.subject}</span>

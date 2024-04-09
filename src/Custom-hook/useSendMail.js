@@ -5,6 +5,7 @@ const useSendEmail = () => {
 
   const sendEmail = async (userData) => {
     try {
+     
       const mailToSend = userData.receiver.replace(/[.@]/g, "");
 
       const response = await fetch(
