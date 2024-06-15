@@ -3,10 +3,11 @@
     width:40vw;
     border:2px solid black;
     margin-top:5%;
+    /* margin-bottom: 2%; */
     left:55%;
     padding:1rem;
-    padding-bottom:3rem;
-    z-index: 10;
+    padding-bottom: 6rem;
+    z-index: 1000;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
@@ -15,23 +16,29 @@
     background-color: transparent;
     padding: 0.5rem;
     border-radius: 1rem;
-    bottom: 0.5rem;
-    left:40%
+   bottom: 0.5rem;
+    left:42%;
+    z-index: 1000;
+    
+
     
     
 }
 .demo-wrapper {
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 20px;
+  z-index: 1000;
 
 
 }
 
 .demo-editor {
-  min-height: 500px; 
+  /* min-height: 700px;  */
   font-family: Arial, sans-serif; 
   font-size: 16px; 
   overflow-y:scroll;
+  padding: 1rem;
+  z-index: 1000;
  
  
 }

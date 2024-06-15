@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-
+import { IoMdClose } from "react-icons/io";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./ComposeMail.css";
@@ -33,8 +33,13 @@ const ComposeMail = () => {
     dispatch(mailAction.setVisibleMail());
   };
 
+  const handleCloseBtn=()=>{
+    dispatch(mailAction.setVisibleMail());
+  }
+
   return ReactDOM.createPortal(
     <Card className="mail-ctn">
+      <IoMdClose className="close-icon" onClick={handleCloseBtn}/>
       <Card.Body>
         <InputGroup className="mb-3">
           <InputGroup.Text>To:</InputGroup.Text>
@@ -49,7 +54,7 @@ const ComposeMail = () => {
           <Form.Control type="text" placeholder="subject" ref={subject} />
         </Form.Group>
         <div className="editor">
-          <ReactQuill theme="snow" ref={content} />
+          <ReactQuill theme="snow" ref={content} style={{height:'40vh'}}/>
         </div>
         <button className="send-btn" type="submit" onClick={sendMailData}>
           Send
