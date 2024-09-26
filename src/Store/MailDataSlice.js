@@ -1,11 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filter } from "draft-js/lib/DefaultDraftBlockRenderMap";
-import { act } from "react";
+
 
 
 const mailState = {
   fetchedData: [],
-  filteredData:[],
   visibleMail: false,
   readState: false,
   unreadCount: 0,
@@ -17,22 +15,11 @@ const MailDataSlice = createSlice({
   initialState: mailState,
   reducers: {
     setFetchedData(state, action) {
-      console.log(action.payload);
+    
       state.fetchedData = action.payload;
       state.filteredData = action.payload
     },
-    setFilteredData(state,action){
-      const query = action.payload.toLowerCase();
-      // const dataToFilter = action.payload.fetchedData
-      console.log(action.payload)
-           state.filteredData = state.fetchedData.filter((mail)=>{
-            mail.subject.toLowerCase().includes(query.toLowerCase()) ||
-            mail.sender.toLowerCase().includes(query.toLowerCase()) ||
-            mail.content.toLowerCase().includes(query.toLowerCase()) ||
-            mail.receiver.toLowerCase().includes(query.toLowerCase()) 
-          })
-          state.searchQuery = action.payload;
-    },
+ 
     setVisibleMail(state) {
       state.visibleMail = !state.visibleMail;
     },
@@ -59,7 +46,7 @@ const MailDataSlice = createSlice({
   },
 });
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 // export const SendEmail = (userData) => {
 //   const mailTosend = userData.receiver.replace(/[.@]/g, "");
@@ -97,11 +84,12 @@ const baseUrl = process.env.REACT_APP_API_BASE_URL;
 // };
 
 export const ReadMessage = (userEmail, endpoint, mail) => {
+
   if (endpoint === "inbox") {
     return async (dispatch) => {
       try {
         const response = await fetch(
-          `${baseUrl}/mail/${userEmail}/${endpoint}/${mail.id}.json`,
+          `https://mail-c25ec-default-rtdb.firebaseio.com/mail/${userEmail}/${endpoint}/${mail.id}.json`,
           {
             method: "PUT",
             body: JSON.stringify({ ...mail, read: true }),
@@ -124,10 +112,11 @@ export const ReadMessage = (userEmail, endpoint, mail) => {
 };
 
 export const fetchMail = (userEmail, endpoint, fetchedData) => {
+ 
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `${baseUrl}/mail/${userEmail}/${endpoint}.json`
+        `https://mail-c25ec-default-rtdb.firebaseio.com/mail/${userEmail}/${endpoint}.json`
       );
 
       if (!response.ok) {
@@ -164,10 +153,11 @@ export const fetchMail = (userEmail, endpoint, fetchedData) => {
 };
 
 export const deleteMail = (userEmail, endpoint, userId) => {
+
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `${baseUrl}/mail/${userEmail}/${endpoint}/${userId}.json`,
+        `https://mail-c25ec-default-rtdb.firebaseio.com/mail/${userEmail}/${endpoint}/${userId}.json`,
         {
           method: "DELETE",
         }

@@ -9,6 +9,7 @@ body {
     background:
       url(assets/images/nasa-rTZW4f02zY8-unsplash.jpg)
       center / cover no-repeat fixed;
+      height: 100vh;
 
 }
 

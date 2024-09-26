@@ -49,7 +49,6 @@ const SignUp = () => {
         dispatch(authAction.login(response.idToken));
         dispatch(authAction.setUserEmail(response.email));
         history.replace("/home");
-
         console.log("User Logged In Successfully");
       } else {
         throw new Error(response.error.message);

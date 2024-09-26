@@ -2,7 +2,7 @@ import React from "react";
 import MailMenu from "./MailMenu";
 import SearchBar from "./SearchBar";
 import ComposeMail from "./ComposeMail";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+
 import { useSelector } from "react-redux";
 
 const MailBox = () => {

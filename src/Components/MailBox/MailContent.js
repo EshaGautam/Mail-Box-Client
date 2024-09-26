@@ -7,14 +7,13 @@ import { deleteMail, fetchMail, mailAction } from "../../Store/MailDataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { ReadMessage } from "../../Store/MailDataSlice";
 import { MdDelete } from "react-icons/md";
-// import useFetchMail from "../../Custom-hook/useFetchMail";
+
 
 const MailContent = () => {
   const { endpoint } = useParams();
   const fetchedData = useSelector((state) => state.mail.fetchedData);
   const userEmail = useSelector((state) => state.auth.userEmail);
-  const readState = useSelector((state) => state.mail.readState);
-  const unreadCount = useSelector((state) => state.mail.unreadCount);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
